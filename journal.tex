@@ -88,7 +88,7 @@ The works in \cite{Do1, Do2, Guo, Pei} all focus on single-cell or two-cell scen
 
 Recently, some studies have addressed general-scenario multi-cell NOMA. The authors of \cite{Ali} consider the problem of dynamic power allocation with coordinated multi-point (CoMP) transmission in the downlink and propose a distributed power optimization approach. The authors of \cite{You1} study the cell load coupling system for multi-cell NOMA, and propose an algorithm for power allocation and UE pairing for optimal resource management. A complementary note to \cite{You1} is provided in \cite{You2}. The authors of \cite{Ni} study the total transmit power minimization problem for multi-cell and multi-carrier NOMA (MCMC-NOMA) networks, and propose a resource allocation algorithm which can dramatically reduce the power consumption. The authors of \cite{Lei} investigate energy optimization in MCMC-NOMA networks, and propose tailored algorithms to provide energy-efficient solutions for three NOMA grouping schemes.
 
-Different from \cite{Do1, Do2, Guo, Pei}, which focus on single-cell or two-cell NOMA systems, we consider more general multi-cell scenarios. In addition, we focus on the experience of edge UEs. Indeed, the achievable rate of the edge UEs is generally much lower than that of the cell-center UEs \cite{Dai}. We aim at investigating how much NOMA can offer to edge UEs. To this end, we study the joint optimization problem of time-frequency resource allocation, UE pairing, and power split, with the objective of maximizing the amount of data delivered to cell-edge UEs. We formulate this problem and derive its fundamental properties. According to these properties, we first propose a single-cell algorithm, aiming to minimize time-frequency resource consumption for any given amount of data to be delivered to the edge UEs within one cell, while the resource allocation of other cells is tentatively fixed. Next, we iteratively apply a fixed-point method with the single-cell algorithm to minimize multi-cell resource consumption. Then, we approach the global optimum of the overall problem by embedding the fixed-point method into bi-section search. Finally we evaluate the performance of algorithm in multi-cell NOMA compared to OMA.
+Different from \cite{Do1, Do2, Guo, Pei}, which focus on single-cell or two-cell NOMA systems, we consider more general multi-cell scenarios. In addition, we focus on the experience of edge UEs. Indeed, the achievable rate of the edge UEs is generally much lower than that of the cell-center UEs \cite{Dai}. We aim at investigating how much NOMA can offer to edge UEs. To this end, we study the joint optimization problem of time-frequency resource allocation, UE pairing, and power split, with the objective of maximizing the amount of data delivered to cell-edge UEs. We formulate this problem and derive its fundamental properties. We first propose a single-cell algorithm, aiming to minimize time-frequency resource consumption for any given amount of data to be delivered to the edge UEs within one cell, while the resource allocation of other cells is tentatively fixed. Next, we iteratively apply a fixed-point method with the single-cell algorithm to minimize multi-cell resource consumption. Then, we approach the global optimum of the overall problem by embedding the fixed-point method into bi-section search. Finally we evaluate the performance of algorithm in multi-cell NOMA compared to OMA.
 
 %-----------------------------------------------------------------------------------------------------------------------------------------------
 \section{System Model and Problem Formulation} \label{Sec:SystemModel}
@@ -98,7 +98,7 @@ Different from \cite{Do1, Do2, Guo, Pei}, which focus on single-cell or two-cell
 Denote by $\mathcal{I} = \{1,2,...,I \}$ and $\mathcal{J} = \{1,2,...,J\}$ the sets of cells and UEs, respectively. 
 We consider downlink and denote by $g_{ij}$ the channel power gain from cell $i$ to UE $j$ $(i \in \mathcal{I}, j \in \mathcal{J})$. Denote by $\mathcal{J}_i$ the set of UEs served by cell $i$.
 
-The time-frequency resource is divided into resource units (RUs). In NOMA, multiple UEs can access the same RU by SIC. However, the complexity of decoding grows rapidly with the number of UEs involved in SIC. It has been demonstrated that two UEs in SIC can offer a good trade-off between complexity and performance \cite{Islam}. By this fact, we consider two UEs in one cell sharing one RU as a {\em pair} (denoted by $u=\{j,h\}$), and call the process of selecting UEs to form pairs as {\em UE pairing} or simply {\em pairing}. To keep the generality, a pair may consist of a single UE $j$, i.e., UE uses OMA mode, and we denote this special pair by $u=\{0,j\}$. For cell $i$, denote by $\mathcal{U}_i$ the set of all candidate pairs of UEs in $\mathcal{J}_i$. Similarly, use $\mathcal{U}_j$ to refer to the set of all pairs containing UE $j$. Furthermore, we use ${\mathcal{U}}$ to refer to the set of all candidate pairs, i.e., $\mathcal{U} = \bigcup _{i \in \mathcal{I}}  \mathcal{U}_i$, and use $N$ to denote the number of candidate pairs, i.e., $N=|\mathcal{U}|$. Also, we put indices on $u$ to differentiate between pairs, i.e., $\mathcal{U} = \{u_1,u_2,...,u_N\}$. Besides, we use a binary $y_{u}$ to indicate whether or not the pairs $u$ is selected. We optimize pairing by optimizing $\boldsymbol{y}$, where $\boldsymbol{y} = [y_{u_1},y_{u_2},...,y_{u_N}]$.
+The time-frequency resource is divided into resource units (RUs). In NOMA, multiple UEs can access the same RU by SIC. However, the complexity of decoding grows rapidly with the number of UEs involved in SIC. It has been demonstrated that two UEs in SIC can offer a good trade-off between complexity and performance \cite{Islam}. In view of this, we consider two UEs in one cell sharing one RU as a {\em pair} (denoted by $u=\{j,h\}$), and call the process of selecting UEs to form pairs as {\em UE pairing} or simply {\em pairing}. To keep the generality, a pair may consist of a single UE $j$, i.e., UE uses the OMA mode, and we denote this special pair by $u=\{0,j\}$. For cell $i$, denote by $\mathcal{U}_i$ the set of all candidate pairs of UEs in $\mathcal{J}_i$. Similarly, use $\mathcal{U}_j$ to refer to the set of all pairs containing UE $j$. Furthermore, we use ${\mathcal{U}}$ to refer to the set of all candidate pairs, i.e., $\mathcal{U} = \bigcup _{i \in \mathcal{I}}  \mathcal{U}_i$, and use $N$ to denote the cardinality of U, i.e., $N=|\mathcal{U}|$. Also, we put indices on $u$ to differentiate between the pairs, i.e., $\mathcal{U} = \{u_1,u_2,...,u_N\}$. We use a binary $y_{u}$ to indicate whether or not the pair $u$ is selected. We optimize pairing by optimizing $\boldsymbol{y}$, where $\boldsymbol{y} = [y_{u_1},y_{u_2},...,y_{u_N}]$.
 
 We use $p_i$ to denote the transmission power of cell $i$ on an RU. For each pair $u$ in cell $i$, {\em power splitting} is done on $p_i$, with $q_{ju}$ and $q_{hu}$ allocated to UE $j$ and $h$, respectively. Namely,
 \begin{equation}
@@ -108,7 +108,7 @@ Besides, denote by $x_u$ the proportion of RUs allocated to pair $u$. We have
  \begin{equation}
  \rho_i = \sum \nolimits_{u \in {\mathcal{U}}_i} x_u \leq \bar{\rho},  i\in \mathcal{I},
  \end{equation}
-where $\bar{\rho}$ is how many RUs at most can be allocated to one cell. 
+where $\bar{\rho}$ is how many RUs at most can be allocated in one cell. 
 
 %We remark that we obtain optimal pairs by optimizing $\boldsymbol{x} = [x_{u_1},x_{u_2},...,x_{u_N}]$ and the optimal $\boldsymbol{x}^*$ also represents the result of pairing optimization. If any $x_u^* > 0$, UEs $j$ and $h$ form a pair $u$ to share RU in NOMA mode, and if $x_u^* = 0$, then UEs $j$ and $h$ ($j,h \in u$) do not share RU.
 
@@ -116,11 +116,11 @@ For any UE $j$ $\left(j \in u\right)$, the signal-to-interference and noise rati
 \begin{equation}
 \gamma _{ju} \!=\!\frac{q_{ju}g_{ij}}{{B_{ju}q_{hu}g_{ij}}\!+\!{\sum_{k\in \mathcal{I}\setminus \left \{ i \right \}}p_kg_{kj}\rho_k}\!+\!\sigma ^2}, j\!\in\! u, u \!\in\!{\mathcal{U}}.\label{1111}
 \end{equation}
-We stipulate $\gamma_{0u} = 0$ to copy with the special case $u=\{0,j\}$.
+We set $\gamma_{0u} = 0$ to for with the special case $u=\{0,j\}$.
 
-In (\ref{1111}), $B_{ju}q_{hu}g_{ij}$ is the inter-user interference, where $B_{ju}$ is a binary indicator depending on $j$'s decoding order. For example, if UE $j$ decodes $h$'s signal first and hence $h$'s signal does not affect $j$, $B_{ju} = 0$, otherwise, $B_{ju} = 1$. Besides, ${\sum_{k\in \mathcal{I}\setminus \left \{ i \right \}}p_kg_{kj}\rho_k}$ is the inter-cell interference, where $\rho_k$ is the amount of time-frequency resource consumption of cell $k$ and reflects the likelihood that a UE outside cell $k$ receives interference from $k$. The symbol $\sigma^2$ is the noise power.
+In (\ref{1111}), $B_{ju}q_{hu}g_{ij}$ is the inter-user interference within a cell due to SIC, where $B_{ju}$ is a binary indicator depending on $j$'s decoding order. If UE $j$ decodes $h$'s signal first and hence $h$'s signal does not affect $j$, $B_{ju} = 0$, otherwise, $B_{ju} = 1$. Besides, ${\sum_{k\in \mathcal{I}\setminus \left \{ i \right \}}p_kg_{kj}\rho_k}$ is the inter-cell interference, where $\rho_k$ is the amount of time-frequency resource consumption of cell $k$ and reflects the likelihood that a UE outside cell $k$ receives interference from $k$. The symbol $\sigma^2$ is the noise power.
 
-In addition, in any pair $u$, the optimal decoding order (i.e., $B_{ju}$ and $B_{hu}$) is determined by the channel condition, inter-cell interference, and noise \cite{41}. We define $w_j$ to determine the decoding order for any UE $j$ as follows. 
+In addition, in any pair $u$, the optimal decoding order (i.e., $B_{ju}$ and $B_{hu}$) is determined by the channel condition, inter-cell interference, and noise \cite{41}. We define $w_j$ for the purpose of modeling the decoding order for any UE $j$ as follows. 
 \begin{equation}
 w_j=  \left(\sum \nolimits_{k \in \mathcal{I}\setminus \left \{ i \right \} }p_k g_{kj}\rho_k+\sigma ^2   \right) / g_{ij} .
 \end{equation}
@@ -131,26 +131,27 @@ B_{ju} = 0,B_{hu} =1, \text{if } w_j < w_h,\\
 B_{ju} = 1,B_{hu} =0, \text{otherwise}.
 \end{array}\right.
 \end{equation}
-Specially, we stipulate $w_0\rightarrow +\infty $ to copy with $u=\{0,j\}$.
+For the special case of $u = \{0, j\}$, the value of $w_0$ is set to be a large value such that in effect UE $j$ is in the OMA mode.
 
 According to (\ref{1111}), we can obtain the achievable capacity for UE $j$ in pair $u$ on any RU as follows, where $\boldsymbol{q}=[q_{ju_1},q_{hu_1},q_{ju_2},q_{hu_2},...,q_{ju_N},q_{hu_N},]$, $\boldsymbol{\rho}=[\rho_1,\rho_2,..., \rho_I]$, and $\boldsymbol{B}=[B_{ju_1},B_{hu_1},B_{ju_2},B_{hu_2},...,B_{ju_N},B_{hu_N},]$.
-\begin{equation}
-c_{ju}\left (\boldsymbol{q},\boldsymbol{ \rho}, \boldsymbol{B}\right )\!=\!\log \left ( 1\!+\!\gamma_{ju} \right )\!=\!\log \left ( 1\!+\!\frac{q_{ju}}{B_{ju}q_{hu}\!+\!w_j} \right ).
-\end{equation}
+\begin{align}
+c_{ju}\left (\boldsymbol{q},\boldsymbol{ \rho}, \boldsymbol{B}\right )\!=\!\log \left ( 1\!+\!\gamma_{ju} \right )\!=\!\log \left ( 1\!+\!\frac{q_{ju}}{B_{ju}q_{hu}\!+\!w_j} \right )\notag\\
+=\!\log \left ( 1+\frac{q_{ju}g_{ij}}{{B_{ju}q_{hu}g_{ij}}\!+\!{\sum_{k\in \mathcal{I}\setminus \left \{ i \right \}}p_kg_{kj}\rho_k}\!+\!\sigma ^2} \right ).
+\end{align}
 We use $d_j$ to denote the base demand of UE $j$ ($j \in \mathcal{J}$) and denote by $M$ and $B$ the total number of RUs in one cell and the bandwidth of each RU, respectively. We have
 \begin{equation}
 \sum\nolimits_{u\in {\mathcal{U}}_j} M B c_{ju}\left (\boldsymbol{q},\boldsymbol{ \rho}, \boldsymbol{B}\right )x_u\geq d_j, j \in \mathcal{J}.
 \end{equation}
-In addition, we use $\mathcal{S}$ to denote the set of edge UEs. We would like to scale up the demand of edge UEs by a {\em scaling factor} $\alpha$ $\left (\alpha \geq 1\right)$. Because considering the maximization of $\alpha$ can tell us how much NOMA can offer to edge UEs. Thus, we have
+In addition, we use $\mathcal{S}$ to denote the set of edge UEs. We would like to scale up the demand that can be delivered to the edge UEs by a {\em scaling factor} $\alpha$ $\left (\alpha \geq 1\right)$, because considering the maximization of $\alpha$ can tell us how much NOMA can offer to edge UEs. Thus, we have
 \begin{equation}
 \sum\nolimits_{u\in {\mathcal{U}}_j} M B c_{ju}\left (\boldsymbol{q},\boldsymbol{ \rho}, \boldsymbol{B}\right )x_u\geq \alpha d_j,j\in \mathcal{S}.
 \end{equation}
 
-For convenience, in following discussion, we use normalized $d_j$ such that two notations $M$ and $B$ are not necessary in our presentation.
+For convenience, in following discussion, we use normalized $d_j$ such that two notations $M$ and $B$ are not necessary.
 
 \subsection{Problem Formulation}\label{MathematicalFormulation}
 
-Consider optimizing resource allocation in NOMA networks for demand scaling maximization. We optimize power split $\boldsymbol{q}$, pair-level resource allocation $\boldsymbol{x}$, pairs selection $\boldsymbol{y}$, decoding order indicator $\boldsymbol{B}$, and cell-level resource allocation $\boldsymbol{\rho}$. The objective function $\alpha$ is the scaling factor for a given set of edge UEs $\mathcal{S}$ ($\mathcal{S}\subseteq \mathcal{J}$), given the base UE demand $\boldsymbol{d}=[d_1,d_2,...,d_m]$. The formulation is in (\ref {formulation}).
+Consider optimizing resource allocation in NOMA networks for demand scaling maximization of edge UEs. We optimize power split $\boldsymbol{q}$, pair-level resource allocation $\boldsymbol{x}$, pair selection $\boldsymbol{y}$, decoding order indicator $\boldsymbol{B}$, and cell-level resource allocation $\boldsymbol{\rho}$. The objective function $\alpha$ is the scaling factor for the given set of edge UEs $\mathcal{S}$ ($\mathcal{S}\subseteq \mathcal{J}$), with respect to the base UE demand $\boldsymbol{d}=[d_1,d_2,...,d_m]$. The formulation is in (\ref {formulation}).
 \begin{subequations}\label{formulation}
 \begin{align}
 \textup{[{\em MaxD}]}&\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \underset{\alpha \geq 1,\boldsymbol{q},\boldsymbol{x},\boldsymbol{\rho}\geq \boldsymbol{0} \atop \boldsymbol{y},\boldsymbol{B}\in \left \{ 0,1 \right \}}{\max} \alpha  \\
@@ -169,7 +170,7 @@ Consider optimizing resource allocation in NOMA networks for demand scaling maxi
 
 
 
-The UEs in $\mathcal{S}$ can be regarded as being throughput-oriented such that delivering more bits leads to higher satisfaction, as imposed by constraints (\ref{demand1}) and (\ref{demand2}). The other UE demands $d_j$ $(j \!\in \!\mathcal{J} \!\setminus\mathcal{S})$ constraints are (\ref{demand2}). Constraints (\ref{limit1}) and (\ref{limit2}) impose the cell power limit and RUs allocated to one cell limit, respectively. Constraints (\ref{y1}) guarantee that RU allocation occurs only for selected pairs. By constraints (\ref{y2}), each UE belongs up to one pair such that the selected pairs are not overlapping. Constraints (\ref{order0}) - (\ref{order2}) is for the decoding order in a pair, and they make decoding orders follow the rule (\ref{rule}) in Section II-A. 
+The UEs in $\mathcal{S}$ can be regarded as being throughput-oriented such that delivering more bits leads to higher satisfaction, as imposed by constraints (\ref{demand1}). The other UE $d_j$ $(j \!\in \!\mathcal{J} \!\setminus\mathcal{S})$ constraints are (\ref{demand2}). Constraints (\ref{limit1}) and (\ref{limit2}) impose the cell power limit and RU limit of any cell, respectively. Constraints (\ref{y1}) guarantee that RU allocation occurs only for selected pairs. By constraints (\ref{y2}), each UE belongs up to one pair such that the selected pairs are not overlapping. Constraints (\ref{order0}) - (\ref{order2}) are for the decoding order in a pair, and they make decoding orders follow the rule (\ref{rule}) in Section II-A. 
 
 
 
@@ -179,59 +180,63 @@ The UEs in $\mathcal{S}$ can be regarded as being throughput-oriented such that 
 Before presenting the solution method for {\em MaxD}, we outline two lemmas for optimality characterization. The lemmas provide some fundamental properties for solving {\em MaxD}. 
 
 
-We denote by $\mathcal{H}$ a function that gives the normalized maximum time-frequency resource consumption of one cell in multi-cell network, i.e.,
+We denote by $\mathcal{H}$ a function that gives the normalized maximum time-frequency resource consumption of one cell, i.e.,
 \begin{equation}
 \mathcal{H}(\boldsymbol{\rho}) = \frac{1}{\bar{\rho}}\underset{i\in \mathcal{I}}{\max} \ \rho_i.
 \end{equation}
 
 
 \begin{lemma}\label{property 1}
-$[\alpha ^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*, \boldsymbol{B}^*]$ is optimal to MaxD only if $\mathcal{H}(\boldsymbol{\rho^*}) = 1$ and $\sum_{u\in \mathcal{U}_j} c_{ju}\left (\boldsymbol{q}^*,\boldsymbol{ \rho}^*, \boldsymbol{B}^*\right )x_u^*= \alpha^* d_j$ for some $j\in \mathcal{S}$.
+$[\alpha ^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*, \boldsymbol{B}^*]$ is optimal to MaxD only if $\sum_{u\in \mathcal{U}_j} c_{ju}\left (\boldsymbol{q}^*,\boldsymbol{ \rho}^*, \boldsymbol{B}^*\right )x_u^*= \alpha^* d_j$ for some $j\in \mathcal{S}$ and $\mathcal{H}(\boldsymbol{\rho^*}) = 1$.
 \end{lemma}
 \begin{proof} 
-Suppose $[\alpha ^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ is an optimal solution such that all inequalities strictly hold in (\ref{demand1}). Then one can increase $\alpha^*$ to $\alpha' = \alpha^* + \epsilon$. By setting $\epsilon$ to be a sufficiently small positive value, one can obtain a feasible solution $[\alpha', \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ with objective value $\alpha '$, which conflicts the assumption that $[\alpha', \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ with objective value $\alpha '$ is optimal. Therefore, there exist some $j$ $(j\in \mathcal{S})$ such that $\sum_{u\in \mathcal{U}_j} c_{ju}\left (\boldsymbol{q}^*,\boldsymbol{ \rho}^*, \boldsymbol{B}^*\right )x_u^*= \alpha d_j$.
+Suppose $[\alpha ^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ is an optimal solution such that all inequalities strictly hold in (\ref{demand1}). Then one can increase $\alpha^*$ to $\alpha'$ such that at least one of (\ref{demand1}) holds as equality.  Thus, $[\alpha', \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ is a feasible solution and $\alpha'>\alpha^*$, which conflicts the assumption that $[\alpha^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ is optimal. Therefore, there exist some $j$ $(j\in \mathcal{S})$ such that $\sum_{u\in \mathcal{U}_j} c_{ju}\left (\boldsymbol{q}^*,\boldsymbol{ \rho}^*, \boldsymbol{B}^*\right )x_u^*= \alpha^* d_j$.
 
-Obviously any solution $[\alpha', \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ with $\mathcal{H}(\boldsymbol{\rho}) > 1$ is infeasible because at least one of (\ref{limit2}) is violated. Now suppose $\mathcal{H}(\boldsymbol{\rho}) < 1$. Then we increase $\boldsymbol{\rho}^*$ to $\boldsymbol{\rho}' =\beta\boldsymbol{\rho}^*$ $(\beta = 1 + \epsilon, \epsilon > 0)$, thus $\boldsymbol{q}' = \beta\boldsymbol{q}^*$. With $\epsilon$ being sufficiently small, $\boldsymbol{\rho}' $ satisfies (\ref{limit2}). We define 
-\begin{equation}
-g_j (\boldsymbol{q}) = \sum\nolimits_{u\in \mathcal{U}_j} c_{ju}\left (\boldsymbol{q},\boldsymbol{ \rho}, \boldsymbol{B}\right ) x_u.
+Obviously any solution $[\alpha', \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ with $\mathcal{H}(\boldsymbol{\rho}) > 1$ is infeasible because at least one of (\ref{limit2}) is violated. Now suppose $\mathcal{H}(\boldsymbol{\rho}) < 1$. Then we increase $\boldsymbol{x}^*$ to $\boldsymbol{x}' =\beta\boldsymbol{x}^*$ $(\beta = 1 + \epsilon, \epsilon > 0)$ such that $\boldsymbol{\rho}' =\beta\boldsymbol{\rho}^*$. With $\epsilon$ being sufficiently small, $\boldsymbol{\rho}'   $ satisfies (\ref{limit2}). First, we define an auxiliary function $f(z) = (1+\frac{z}{\beta})^\beta$. According to Taylor's formula, the auxiliary function can be transformed by
+\begin{align}
+f(z) =(1+\frac{z}{\beta})^\beta&= \frac{f(0)}{0!} + \frac{f'(0)}{1!}(z-0)+R_1(z)\notag\\
+&=1+z+R_1(z)
+\end{align}
+where $R_1(z)=\frac {(\beta-1)(1+\frac{\theta z}{\beta})^{\beta-2}(\theta z)^2}{2\beta}>0$ $(\theta \in (0,1))$, which is the Lagrange remainder. We thus have
+\begin{equation}\label{goto}
+(1+\frac{z}{\beta})^\beta>1+z.
 \end{equation}
-Also, define $\boldsymbol{g} (\boldsymbol{q}) = [g_1 (\boldsymbol{q}),g_2 (\boldsymbol{q}),...,g_m (\boldsymbol{q})]$. Due to the monotonicity of the logarithmic function, we have 
-\begin{equation}\label{lemma1-1}
-  \boldsymbol{g} (\beta\boldsymbol{q}^*) >\boldsymbol{g} (\boldsymbol{q}^*). 
-\end{equation}
-Consider (\ref{demand1}) for $\boldsymbol{q}^*$, which reads for any $j\in \mathcal{S}$
-\begin{equation}\label{lemma1-2}
-g_j (\boldsymbol{q}^*) \geq \alpha d_j 
-\end{equation}
-Combining (\ref{lemma1-1}) and (\ref{lemma1-2}) we have 
-\begin{equation}
-g_j (\beta\boldsymbol{q}^*) \geq \alpha d_j \Leftrightarrow g_j (\boldsymbol{q}') \geq \alpha d_j 
-\end{equation}
-The same process applies for deriving $ g_j (\boldsymbol{q}') \geq  d_j $ for $j\in \mathcal{J}\setminus\mathcal{S}$. Therefore, $\boldsymbol{\rho}'$ is a feasible solution to {\em MaxD} such that all inequalities in (\ref{demand1}) and (\ref{demand2}) strictly hold. Under $\boldsymbol{\rho}'$, one can increase $\alpha^*$ to $\alpha '$ as earlier in the proof, to obtain a better objective value, which conflicts with our assumption that $[\alpha ^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ is optimal.
+For each UE $j$ $(j\in \mathcal{S})$, with (\ref{goto}) we have
+\begin{align}
+&\sum\limits_{u\in \mathcal{U}_j} c_{ju}\left (\boldsymbol{q}^*,\boldsymbol{ \rho}', \boldsymbol{B}^*\right ) x_u'=\sum\limits_{u\in \mathcal{U}_j} c_{ju}\left (\boldsymbol{q}^*,\beta\boldsymbol{ \rho}^*, \boldsymbol{B}^*\right ) \beta x_u^*\notag\\
+\!=\!&\sum\limits_{u\in \mathcal{U}_j}\!\log \!\left ( 1\!+\!\frac{q_{ju}^*g_{ij}}{{B_{ju}^*q_{hu}^*g_{ij}}\!+\!\beta{\sum\limits_{k\in \mathcal{I}\setminus \left \{ i \right \}}p_kg_{kj}\rho_k^*}\!+\!\sigma ^2} \right )\beta x_u^*\notag\\
+>& \sum\limits_{u\in \mathcal{U}_j}\!\log \!\left ( \!1\!+\!\frac{q_{ju}^*g_{ij}}{\beta\!\left(\!{B_{ju}^*q_{hu}^*g_{ij}}\!+\!{\sum\limits_{k\in \mathcal{I}\setminus \left \{ i \right \}}p_kg_{kj}\rho_k^*}\!+\!\sigma ^2\!\right)} \!\right )\!^\beta x_u^*\label{lemma1-1}\notag\\
+>&\sum\limits_{u\in \mathcal{U}_j}\!\log \!\left ( \!1\!+\!\frac{q_{ju}^*g_{ij}}{\!\!{B_{ju}^*q_{hu}^*g_{ij}}\!+\!{\sum\limits_{k\in \mathcal{I}\setminus \left \{ i \right \}}p_kg_{kj}\rho_k^*}\!+\!\sigma ^2\!} \!\right ) x_u^*\notag\\
+=&\!\sum\limits_{u\in \mathcal{U}_j} c_{ju}\left (\boldsymbol{q}^*,\boldsymbol{ \rho}^*, \boldsymbol{B}^*\right )  x_u^*\geq\alpha d_j\notag\\
+\ &\ \ \ \ \ \ \ \ \ \ \ \Rightarrow \sum\limits_{u\in \mathcal{U}_j} c_{ju}\left (\boldsymbol{q}^*,\boldsymbol{ \rho}', \boldsymbol{B}^*\right ) x_u'>\alpha d_j
+\end{align}
+
+The same process applies for UE $j$ $(j\in \mathcal{J}\setminus\mathcal{S})$. Therefore, $\boldsymbol{\rho}'$ is a feasible solution to {\em MaxD} such that all inequalities in (\ref{demand1}) and (\ref{demand2}) strictly hold. Under $\boldsymbol{\rho}'$, one can increase $\alpha^*$ to $\alpha '$ as earlier in the proof, to obtain a better objective value, which conflicts with our assumption that $[\alpha ^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ is optimal.
 Thus, at the optimum of {\em MaxD} there is at least one UE $j$ $(j\in \mathcal{S})$ such that $\sum_{u\in \mathcal{U}_j} c_{ju}\left (\boldsymbol{q}^*,\boldsymbol{ \rho}^*, \boldsymbol{B}^*\right )x_u^*= \alpha^* d_j$ and $\mathcal{H}(\boldsymbol{\rho^*}) = 1$.
 \end{proof}
 \
 
-By Lemma \ref{property 1} we know that a solution is optimal to (\ref{formulation}) only if there exist a fully time-frequency resource consumption cell. Intuitively, if all cells have unused time-frequency resource, then one can improve the objective function such that more data would be delivered to UEs. 
+By Lemma \ref{property 1} we know that a solution is optimal to (\ref{formulation}) only if there exist a cell which runs out time-frequency resource. Intuitively, if all cells have unused time-frequency resource, then one can improve the objective function such that more data would be delivered to UEs. 
 
 
 \begin{lemma}\label{property 2}
 $[\alpha ^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ is optimal to MaxD if (\ref{demand1}) and (\ref{demand2}) all hold as equality and $\mathcal{H}(\boldsymbol{\rho^*}) = 1$.
 \end{lemma}
 \begin{proof}
-Suppose (\ref{demand1}) and (\ref{demand2}) hold for all $j\in \mathcal{J}$ as equalities with $[\alpha ^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$. Consider any $\alpha ' \ (\alpha' > \alpha^*)$. Replacing $\alpha^*$ by $\alpha '$ in (\ref{demand1}) causes (\ref{demand1}) being violated. Thus $q_{ju}^* (j\in\mathcal{S})$ must increase to have (\ref{demand1}) remains satisfied. Then $\boldsymbol{g} (\boldsymbol{q}) $ (defined in the proof of Lemma \ref{property 1}) would grow due to its monotonicity, resulting in the violations of (\ref{demand2}). Therefore, to have (\ref{demand1}) and (\ref{demand2}) remain satisfied, the vector $\boldsymbol{\rho}$ (or say $\boldsymbol{q}$) must be increased. Denote by $\boldsymbol{\rho}'$ the newly obtained resource allocation. Since $\mathcal{H}(\boldsymbol{\rho}^*) = 1$, we must have $\mathcal{H}(\boldsymbol{\rho}') > 1$ which violates some constraint in (\ref{limit2}). Hence the conclusion.
+Suppose (\ref{demand1}) and (\ref{demand2}) hold for all $j\in \mathcal{J}$ as equalities and  $\mathcal{H}(\boldsymbol{\rho^*}) = 1$ with $[\alpha ^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$, which is not optimal. Consider any $\alpha ' \ (\alpha' > \alpha^*)$. Replacing $\alpha^*$ by $\alpha '$ in (\ref{demand1}) causes (\ref{demand1}) being violated. Thus $x_u^*$ $(u\in \mathcal{U}_j\cup \mathcal{U}_i, j\in \mathcal{S})$ must increase to have (\ref{demand1}) remains satisfied. Then received inter-cell interference of UE $h$ $(h\in \mathcal{J}_k,k\neq i)$ would grow, resulting in the violations of (\ref{demand2}). Therefore, to have (\ref{demand1}) and (\ref{demand2}) remain satisfied, the vector $\boldsymbol{\rho}^*$ must be increased. Denote by $\boldsymbol{\rho}'$ the newly obtained resource allocation. Since $\mathcal{H}(\boldsymbol{\rho}^*) = 1$, we must have $\mathcal{H}(\boldsymbol{\rho}') > 1$ which conflicts our assumption. Hence the conclusion.
 \end{proof}
+According to Lemma \ref{property 1} and Lemma \ref{property 2}, we thus obtain the necessary and sufficient conditions of {\em MaxD}.
 
 \section{A Single Cell Subproblem}\label{CellLoadsMinimization}
 
 Due to the interference among cells in multi-cell NOMA, one cell's pairing may affect the other cells' power splits, and vice versa. Let us first study a subproblem of {\em MaxD} in this section: single-cell time-frequency resource consumption minimization problem with a given $\alpha$ and fixed $\boldsymbol{\rho}_{-i}$ (vector $\boldsymbol{\rho}_{-i}$ is composed of all elements but $\rho_i$ of $\boldsymbol{\rho}$). In this special case, the variable $\boldsymbol{B}$ can be dropped, since $\boldsymbol{B}$ can be pre-determined according to (\ref{order0}) - (\ref{order2}). Then, we formulate this minimization problem as follows, where $\boldsymbol{q}_i,\boldsymbol{x}_i,\boldsymbol{y}_i$ is the corresponding variable elements for power split, pair-level resource allocation, and pairs selection, respectively.
 \begin{equation}\label{fi}
- \underset{\rho_i \boldsymbol{q}_i,\boldsymbol{x}_i,\boldsymbol{y}_i,}{\min} \  \rho_i \ \textup{s.t.\ (\ref{demand1})--(\ref{limit2}) of cell $i$} .
+ \underset{\rho_i, \boldsymbol{q}_i,\boldsymbol{x}_i,\boldsymbol{y}_i,}{\min} \  \rho_i \ \textup{s.t.\ (\ref{demand1})--(\ref{limit2}) of cell $i$} .
 \end{equation}
 This minimization problem (\ref{fi}) is not straightforward even under fixed inter-cell interference, because this problem includes power split,  pair-level resource allocation, and pairs selection. However, according to the following Theorem \ref{decouple}, we can draw a conclusion that the optimal power split is independent of pairs selection.
 
 \begin{theorem}\label{decouple}
-Consider $u$ $(u\in \mathcal{U}_i)$. The optimal power split $\hat{\boldsymbol{q}}_u = [\hat{q}_{ju},\hat{q}_{hu}]$ for a given $\hat{\boldsymbol{y}}_i$ whose $y_u=1$, where $\hat{\boldsymbol{q}}_u$ is obtained by optimally solving (\ref{fi}), is also optimal for $\hat{\boldsymbol{y}}_i'$ whose $y_u=1$.
+Consider $u$ $(u\in \mathcal{U}_i)$. The optimal power split $\hat{\boldsymbol{q}}_u = [\hat{q}_{ju},\hat{q}_{hu}]$ for any given $\hat{\boldsymbol{y}}_i$ whose $y_u=1$, where $\hat{\boldsymbol{q}}_u$ is obtained by optimally solving (\ref{fi}), is also optimal for another given $\hat{\boldsymbol{y}}_i'$ whose $y_u=1$.
 \end{theorem}
 \begin{proof}
 Denote by $\hat{\boldsymbol{q}}_u'=[\hat{q}_{ju}',\hat{q}_{hu}']$ the optimal power split for $\hat{\boldsymbol{y}}_i'$. Suppose $\hat{\boldsymbol{q}}_u$ is not optimal for $\hat{\boldsymbol{y}}_i'$. There are two cases: 1) $c_{ju}\left ( \hat{\boldsymbol{q}}_u \right ) = c_{ju}\left ( {\hat{\boldsymbol{q}}_u}' \right )\left (j\in u\right)$; 2) $c_{ju}\left ( {\hat{\boldsymbol{q}}_u} \right ) \neq c_{ju}\left ( {\hat{\boldsymbol{q}}_u}' \right )$ for at least one $j$ in $u$.
@@ -331,7 +336,7 @@ This section we proposes the algorithmic framework for deriving the optimum of {
 
 Recall that for single-cell time-frequency resource consumption minimization problem with a given $\alpha$, the optimum of (\ref{fi}) of cell $i$ is a function of the time-frequency resource consumption of other cells $\boldsymbol{\rho}_{-i}$. We define it as follows
 \begin{equation}\label{fi2}
-f_i\left (\boldsymbol{\rho}_{-i}\right ) =  \underset{\rho_i \boldsymbol{q}_i,\boldsymbol{x}_i,\boldsymbol{y}_i,}{\min} \ \rho_i\  \textup{s.t.\ (\ref{demand1})--(\ref{limit2}) of cell $i$} .
+f_i\left (\boldsymbol{\rho}_{-i}\right ) =  \underset{\rho_i, \boldsymbol{q}_i,\boldsymbol{x}_i,\boldsymbol{y}_i,}{\min} \ \rho_i\  \textup{s.t.\ (\ref{demand1})--(\ref{limit2}) of cell $i$} .
 \end{equation}
 It is proved that $f_i\left (\boldsymbol{\rho}_{-i}\right )$ is standard interference function (SIF) in \cite{Yates}. Any SIF $f\left( \boldsymbol{\rho}\right)$ has the following two properties, where $\boldsymbol{\rho}, \boldsymbol{\rho}' \geq \boldsymbol{0}$.
 
