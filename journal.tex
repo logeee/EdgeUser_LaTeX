@@ -69,7 +69,7 @@
 \maketitle
 \begin{abstract}
 Non-orthogonal multiple access (NOMA) is a promising 
-technique for performance enhancement in cellular networks. This paper investigates how much NOMA can offer for cell edge in multi-cell scenarios. We consider the joint optimization problem of time-frequency resource allocation, user pairing, and power split, for scaling up the demand delivered for edge users. Our approach for problem solving consists in iteratively applying a fixed-point method to the cells, and, for each cell, deriving an algorithm guaranteeing optimum for single-cell optimization. By embedding the fixed-point method into bi-section search, we are able to show the overall approach guarantees global optimality. Numerical results demonstrate that multi-cell NOMA optimization has much more to offer over orthogonal multiple access for the experience of edge users, in particular for high-demand and resource-limited scenarios. 
+technique for performance enhancement in cellular networks. This paper investigates how much NOMA can offer for cell edge in multi-cell scenarios. We consider the joint optimization problem of time-frequency resource allocation, user pairing, and power split, for scaling up the demand delivered for edge users. Our approach for problem solving consists in iteratively applying a fixed-point method to the cells, and, for each cell, deriving an algorithm guaranteeing optimum for single-cell optimization. By embedding the fixed-point method into two iterative equations, we are able to show the overall approach guarantees global optimality. Numerical results demonstrate that multi-cell NOMA optimization has much more to offer over orthogonal multiple access for the experience of edge users, in particular for high-demand and resource-limited scenarios. 
 \end{abstract}
 
 
@@ -88,7 +88,7 @@ The works in \cite{Do1, Do2, Guo, Pei} all focus on single-cell or two-cell scen
 
 Recently, some studies have addressed general-scenario multi-cell NOMA. The authors of \cite{Ali} consider the problem of dynamic power allocation with coordinated multi-point (CoMP) transmission in the downlink and propose a distributed power optimization approach. The authors of \cite{You1} study the cell load coupling system for multi-cell NOMA, and propose an algorithm for power allocation and UE pairing for optimal resource management. A complementary note to \cite{You1} is provided in \cite{You2}. The authors of \cite{Ni} study the total transmit power minimization problem for multi-cell and multi-carrier NOMA (MCMC-NOMA) networks, and propose a resource allocation algorithm that can dramatically reduce the power consumption. The authors of \cite{Lei} investigate energy optimization in MCMC-NOMA networks, and propose tailored algorithms to provide energy-efficient solutions for three NOMA grouping schemes.
 
-Different from \cite{Do1, Do2, Guo, Pei}, which focus on single-cell or two-cell NOMA systems, we consider more general multi-cell scenarios. In addition, we focus on the experience of edge UEs. Indeed, the achievable rate of the edge UEs is generally much lower than that of the cell-center UEs \cite{Dai}. We aim at investigating how much NOMA can offer to edge UEs. To this end, we study the joint optimization problem of time-frequency resource allocation, UE pairing, and power split, with the objective of maximizing the amount of data delivered to cell-edge UEs. We formulate this problem and derive its fundamental properties. We first propose a single-cell algorithm, aiming to minimize time-frequency resource consumption for any given amount of data to be delivered to the edge UEs within one cell, while the resource allocation of other cells is tentatively fixed. Next, we iteratively apply a fixed-point method with the single-cell algorithm to minimize multi-cell resource consumption. Then, we approach the global optimum of the overall problem by embedding the fixed-point method into bi-section search. Finally we evaluate the performance of the algorithm in multi-cell NOMA compared to OMA.
+Different from \cite{Do1, Do2, Guo, Pei}, which focus on single-cell or two-cell NOMA systems, we consider more general multi-cell scenarios. In addition, we focus on the experience of edge UEs. Indeed, the achievable rate of the edge UEs is generally much lower than that of the cell-center UEs \cite{Dai}. We aim at investigating how much NOMA can offer to edge UEs. To this end, we study the joint optimization problem of time-frequency resource allocation, UE pairing, and power split, with the objective of maximizing the amount of data delivered to cell-edge UEs. We formulate this problem and derive its fundamental properties. We first propose a single-cell algorithm, aiming to minimize time-frequency resource consumption for any given amount of data to be delivered to the edge UEs within one cell, while the resource allocation of other cells is tentatively fixed. Next, we iteratively apply a fixed-point method with the single-cell algorithm to minimize multi-cell resource consumption. Then, we approach the global optimum of the overall problem by embedding the fixed-point method into two iterative equations. Finally we evaluate the performance of the algorithm in multi-cell NOMA compared to OMA.
 
 %-----------------------------------------------------------------------------------------------------------------------------------------------
 \section{System Model and Problem Formulation} \label{Sec:SystemModel}
@@ -154,23 +154,25 @@ For convenience, in the following discussion, we use normalized $d_j$ such that 
 Consider optimizing resource allocation in NOMA networks for demand scaling maximization of edge UEs. We optimize power split $\boldsymbol{q}$, pair-level resource allocation $\boldsymbol{x}$, pair selection $\boldsymbol{y}$, decoding order indicator $\boldsymbol{B}$, and cell-level resource allocation $\boldsymbol{\rho}$. The objective function $\alpha$ is the scaling factor for the given set of edge UEs $\mathcal{S}$ ($\mathcal{S}\subseteq \mathcal{J}$), with respect to the base UE demand $\boldsymbol{d}=[d_1,d_2,...,d_m]$. The formulation is in (\ref {formulation}).
 \begin{subequations}\label{formulation}
 \begin{align}
-\textup{[{\em MaxD}]}&\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \underset{\alpha \geq 1,\boldsymbol{q},\boldsymbol{x},\boldsymbol{\rho}\geq \boldsymbol{0} \atop \boldsymbol{y},\boldsymbol{B}\in \left \{ 0,1 \right \}}{\max} \alpha  \\
+\textup{[{\em MaxD}]}&\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \underset{\alpha \geq 1,\boldsymbol{q},\boldsymbol{x},\boldsymbol{\rho}\geq \boldsymbol{0} }{\max} \alpha  \\
 \textup{ s.t.}& \sum\limits_{u\in {\mathcal{U}}_j} c_{ju}\left (\boldsymbol{q},\boldsymbol{ \rho}, \boldsymbol{B}\right )x_u\geq \alpha d_j, j\in \mathcal{S}\label{demand1}\\ 
 & \sum\limits_{u\in {\mathcal{U}}_j} c_{ju}\left (\boldsymbol{q},\boldsymbol{ \rho}, \boldsymbol{B}\right )x_u\geq  d_j, j\in \mathcal{J} \setminus  \mathcal{S}\label{demand2}\\ 
 &\sum \limits_{j \in u} q_{ju}\leq p_i,u\in {\mathcal{U}}_i, i\in \mathcal{I}  \label{limit1}\\
 &\rho _i =\sum \limits_{u\in {\mathcal{U}}_i}x_u\leq \bar{\rho}, i\in \mathcal{I} \label{limit2}\\
 &x_u\leq y_u \bar{\rho}, u\in \mathcal{U}\label{y1}\\
 &\sum\limits_{u\in \mathcal{U}_j}y_u\leq1,j\in\mathcal{J}\label{y2}\\
+&y_u\in\{0,1\}, u\in \mathcal{U}\label{y3}\\
 &w_j\!=\!  \frac{\left(\sum \nolimits_{k \in \mathcal{I}\setminus \left \{ i \right \} }p_k g_{kj}\rho_k+\sigma ^2   \right)}{ g_{ij}},j \in \mathcal{J}_i ,i\in \mathcal{I}\label{order0}\\
 &w_j>w_h\vee(w_j=w_h\wedge h < j)\Rightarrow B_{ju}=1,\notag\\
 &\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ j\neq h,j,h\in u, u\in \mathcal{U}_i, i\in \mathcal{I}\label{order1}\\
-&B_{ju}+B_{hu}=1, j\neq h, j,h\in u, u\in \mathcal{U}_i, i\in \mathcal{I}\label{order2}
+&B_{ju}+B_{hu}=1, j\neq h, j,h\in u, u\in \mathcal{U}_i, i\in \mathcal{I}\label{order2}\\
+&B_{ju},B_{hu}\in\{0,1\}, j,h \in u, u\in \mathcal{U}\label{order3}
 \end{align}
 \end{subequations}
 
 
 
-The UEs in $\mathcal{S}$ can be regarded as being throughput-oriented such that delivering more bits leads to higher satisfaction, as imposed by constraints (\ref{demand1}). The other UE $d_j$ $(j \!\in \!\mathcal{J} \!\setminus\mathcal{S})$ constraints are (\ref{demand2}). Constraints (\ref{limit1}) and (\ref{limit2}) impose the cell power limit and RU limit of any cell, respectively. Constraints (\ref{y1}) guarantee that RU allocation occurs only for selected pairs. By constraints (\ref{y2}), each UE belongs up to one pair such that the selected pairs are not overlapping. Constraints (\ref{order0}) - (\ref{order2}) are for the decoding order in a pair, and they make decoding orders follow the rule (\ref{rule}) in Section II-A. 
+The UEs in $\mathcal{S}$ can be regarded as being throughput-oriented such that delivering more bits leads to higher satisfaction, as imposed by constraints (\ref{demand1}). Constraints (\ref{demand2}) guarantee other UEs $j$ $(j \!\in \!\mathcal{J} \!\setminus\mathcal{S})$ meet their demand $d_j$. Constraints (\ref{limit1}) and (\ref{limit2}) impose the cell power limit and RU limit of any cell, respectively. Constraints (\ref{y1}) guarantee that RU allocation occurs only for selected pairs. By constraints (\ref{y2}) and (\ref{y3}), each UE belongs up to one pair such that the selected pairs are not overlapping. Constraints (\ref{order0}) - (\ref{order3}) are for the decoding order in a pair, and they make decoding orders follow the rule (\ref{rule}) in Section II-A. 
 
 
 
@@ -187,14 +189,12 @@ We denote by $\mathcal{H}$ a function that gives the normalized maximum time-fre
 
 
 \begin{lemma}\label{property 1}
-If $[\alpha ^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*, \boldsymbol{B}^*]$ is optimal to MaxD, then $\sum_{u\in \mathcal{U}_j} c_{ju}\left (\boldsymbol{q}^*,\boldsymbol{ \rho}^*, \boldsymbol{B}^*\right )x_u^*= \alpha^* d_j$ for some $j\in \mathcal{S}$ and $\mathcal{H}(\boldsymbol{\rho^*}) = 1$.
+$[\alpha ^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*, \boldsymbol{B}^*]$ is optimal to MaxD, only if $\mathcal{H}(\boldsymbol{\rho^*}) = 1$.
 \end{lemma}
 \begin{proof} 
-For the first part of the lemma, consider an optimal solution $[\alpha ^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*, \boldsymbol{B}^*]$ to {\em MaxD}. Suppose for this solution, all inequalities strictly hold in (\ref{demand1}). Then one can increase $\alpha^*$ to $\alpha'$ such that at least one of (\ref{demand1}) holds as equality.  Thus, $[\alpha', \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ is a feasible solution and $\alpha'>\alpha^*$, which contradicts the assumption that $[\alpha^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ is optimal. Therefore, there exists some $j$ $(j\in \mathcal{S})$ such that $\sum_{u\in \mathcal{U}_j} c_{ju}\left (\boldsymbol{q}^*,\boldsymbol{ \rho}^*, \boldsymbol{B}^*\right )x_u^*= \alpha^* d_j$.
-
-For the second part of the lemma, obviously any solution with $\mathcal{H}(\boldsymbol{\rho}) > 1$ is infeasible because at least one of (\ref{limit2}) is violated. Now consider an optimal solution and suppose $\mathcal{H^*}(\boldsymbol{\rho}) < 1$. Suppose we increase $\boldsymbol{x}^*$ to $\boldsymbol{x}' =\beta\boldsymbol{x}^*$ $(\beta >1)$ such that $\boldsymbol{\rho}' =\beta\boldsymbol{\rho}^*$ satisfies $\mathcal{H}(\boldsymbol{\rho}') =1$. To show doing so is feasible, we first define an auxiliary function $f(z) = (1+\frac{z}{\beta})^\beta$. According to Taylor's formula, the auxiliary function can be written as
+Obviously any solution with $\mathcal{H}(\boldsymbol{\rho}) > 1$ is infeasible because at least one of (\ref{limit2}) is violated. Now consider an optimal solution and suppose $\mathcal{H^*}(\boldsymbol{\rho}) < 1$. We increase $\boldsymbol{x}^*$ to $\boldsymbol{x}' =\beta\boldsymbol{x}^*$ $(\beta >1)$ such that $\boldsymbol{\rho}' =\beta\boldsymbol{\rho}^*$ satisfies $\mathcal{H}(\boldsymbol{\rho}') =1$. To show doing so is feasible, we first define an auxiliary function $g(z) = (1+\frac{z}{\beta})^\beta$. According to Taylor's formula, the auxiliary function can be written as
 \begin{equation}\label{goto}
-f(z) =(1+\frac{z}{\beta})^\beta=1+z+R_1(z)>1+z,
+g(z) =(1+\frac{z}{\beta})^\beta=1+z+R_1(z)>1+z,
 \end{equation}
 where $R_1(z)=\frac {(\beta-1)(1+\frac{\theta z}{\beta})^{\beta-2}(\theta z)^2}{2\beta}>0$ $(\theta \in (0,1))$, which is the Lagrange remainder. For each UE $j$ $(j\in \mathcal{S})$, with (\ref{goto}) we thus have
 \begin{align}
@@ -206,17 +206,16 @@ where $R_1(z)=\frac {(\beta-1)(1+\frac{\theta z}{\beta})^{\beta-2}(\theta z)^2}{
 \ &\ \ \ \ \ \ \ \ \ \ \ \Rightarrow \sum\limits_{u\in \mathcal{U}_j} c_{ju}\left (\boldsymbol{q}^*,\boldsymbol{ \rho}', \boldsymbol{B}^*\right ) x_u'>\alpha d_j
 \end{align}
 
-The same process applies for UE $j$ $(j\in \mathcal{J}\setminus\mathcal{S})$. Therefore, $\boldsymbol{\rho}'$ is a feasible solution to {\em MaxD} such that all inequalities in (\ref{demand1}) and (\ref{demand2}) strictly hold. Under $\boldsymbol{\rho}'$, one can increase $\alpha^*$ to $\alpha '$ as earlier in the proof, to obtain a better objective value, which contradicts our assumption that $[\alpha ^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ is optimal.
-Thus, at the optimum of {\em MaxD} there is at least one UE $j$ $(j\in \mathcal{S})$ such that $\sum_{u\in \mathcal{U}_j} c_{ju}\left (\boldsymbol{q}^*,\boldsymbol{ \rho}^*, \boldsymbol{B}^*\right )x_u^*= \alpha^* d_j$ and $\mathcal{H}(\boldsymbol{\rho^*}) = 1$.
+The same process applies for UE $j$ $(j\in \mathcal{J}\setminus\mathcal{S})$. Therefore, $\boldsymbol{\rho}'$ is a feasible solution to {\em MaxD} such that all inequalities in (\ref{demand1}) and (\ref{demand2}) strictly hold. Under $\boldsymbol{\rho}'$, one can increase $\alpha^*$ to $\alpha '$ such that at least one of (\ref{demand1}) holds as equality, to obtain a better objective value, which contradicts the assumption that $[\alpha^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ is optimal. Hence the conclusion.
 \end{proof}
 
-By Lemma \ref{property 1} we know that a solution is optimal to (\ref{formulation}) only if there exists at least one cell that uses all the time-frequency resource. Intuitively, if all cells have unused time-frequency resource, then one can improve the objective function such that more data would be delivered to UEs. Furthermore, we provide a sufficient condition of optimality by the following lemma.
+By Lemma \ref{property 1} we know that a solution is optimal to (\ref{formulation}) only if there exists at least one cell that uses all the time-frequency resource. Intuitively, if all cells have unused time-frequency resource, then one can improve the objective function such that more data would be delivered to UEs. 
 
 \begin{lemma}\label{property 2}
-$[\alpha ^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ is optimal to MaxD if (\ref{demand1}) and (\ref{demand2}) all hold as equality and $\mathcal{H}(\boldsymbol{\rho^*}) = 1$.
+$[\alpha ^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ is optimal to MaxD, only if (\ref{demand1}) and (\ref{demand2}) all hold as equality.
 \end{lemma}
 \begin{proof}
-Consider a solution satisfying the conditions in the lemma. Suppose the solution is non-optimal, i.e., there exists a better solution with $\alpha'>\alpha^*$. Replacing $\alpha^*$ by $\alpha '$ in (\ref{demand1}) causes (\ref{demand1}) to become violated. Hence, in order to have (\ref{demand1}) satisfied, a feasible x-solution for $\alpha'$ must be greater than or equal to $x_u^*$ in all elements, and strict inequality holds for at least one element. For any UE $j$ $(j\in \mathcal{J}\setminus \mathcal{S})$, the received inter-cell interference would grow, resulting in the violations of (\ref{demand2}). To satisfy (\ref{demand2}), a feasible x-solution must be greater than the $x_u^*$ in all elements. In fact, each feasible $x_u\ (u\in\mathcal{U})$ for $\alpha'$ is greater than $x^*_u$ such that a feasible $\boldsymbol{\rho}'$ for $\alpha'$ must be greater than $\boldsymbol{\rho}^*$ in all elements. Since $\mathcal{H}(\boldsymbol{\rho}*)=1$, we have $\mathcal{H}(\boldsymbol{\rho}')>1$ which contradicts the constraint (\ref{limit2}), i.e., infeasible. Hence he conclusion.
+Consider an optimal solution to {\em MaxD}, denoted by $[\alpha ^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$. Suppose for this solution, at least one of (\ref{demand1}) and (\ref{demand2}) holds as inequality. Then we can reduce the corresponding $x_u^*$ to $x_u'=\zeta x_u^*$ $(\zeta =1-\epsilon )$, with $\epsilon $ being sufficiently small, such that these inequalities still hold. Since some $x_u^*$ reduce to $x_u'$, the received inter-cell interference of the other UEs would decrease, resulting in their throughput exceeding $d_j$ (or $\alpha d_j$). After above process, (\ref{demand1}) and (\ref{demand2}) all strictly hold as inequality. We thus can increase $\alpha^*$ to $\alpha'$ like the proof of Lemma \ref{property 1}, to obtain a better objective value, which contradicts our assumption that $[\alpha ^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{y}^*,\boldsymbol{B}^*]$ is optimal. Hence the conclusion.
 \end{proof}
 
 \section{Single-cell Optimization for Given Scaling Factor}\label{CellLoadsMinimization}
@@ -232,11 +231,10 @@ Solving this minimization problem (\ref{fi}) is not straightforward even if it i
 \subsection{Finding Optimal Power Split}\label{OptimalPowerSplit}
 
 Thus we study how to find the optimal power split under fixed pairing in cell $i$. With (\ref{order0})-(\ref{order2}), the decoding order is fixed in any UE pair $u$. Without loss of generality, we assume UE $j$ decodes first. Thus the rates of UEs $j$, $h$ in UEs pair $u$ in cell $i$ are as follows.
-\begin{align}
-&c_{ju} = \log(1+\frac{q_{ju}}{w_j}),\label{q1}\\
-&c_{hu} = \log(1+\frac{q_{hu}}{q_{ju}+w_h}).\label{q2}
-\end{align}
-By (\ref{q1}) and (\ref{q2}), we have 
+\begin{equation}\label{q1}
+c_{ju} = \log(1+\frac{q_{ju}}{w_j}),\ c_{hu} = \log(1+\frac{q_{hu}}{q_{ju}+w_h}).
+\end{equation}
+By (\ref{q1}), we have 
 \begin{equation}
 q_{ju} + q_{hu} = w_j e^{c_{ju}+c_{hu}}+(w_h-w_j) e^{c_{hu}}-w_h.
 \end{equation}
@@ -247,9 +245,9 @@ c_{ju} = {\mu_j d_j}/{x_u},\ c_{hu} = {\mu_h d_h}/{x_u},
 %\begin{equation}\label{cju}
 %\end{equation}
 where $\mu_j,\mu_h = \alpha$ if UE $j, h\in \mathcal{S}$, otherwise $\mu_j,\mu_h = 1$, respectively. Then we define a function of $x_u$ according to (\ref{q1})-(\ref{cju1}) as follows.
- \begin{align}
+ \begin{equation}
  f(x_u) \!=\! q_{ju}\!+\!q_{hu}\! = \!w_je^{\frac{\mu_j d_j+\mu_h d_h}{x_u}}\!+\!(w_h\!-\!w_j)e^{\frac{\mu_h d_h}{x_u}}\!-\!w_h.\label{q1+q2}
- \end{align} 
+ \end{equation} 
 Considering RU power limit, the power split constraint reads
 \begin{equation}\label{q1+q2<=p}
 q_{ju}+q_{hu} \leq p_i.
@@ -265,7 +263,7 @@ Although the closed form of the minimum $x_u$ is difficult to obtain for any giv
 
 After obtaining the minimum $x_u$ for all $u$ in cell $i$, enumerating all pairings gives the optimal solution to (\ref{fi}). However, this exhaustive search does not scale. By the following derivation, we are able to obtain the optimum of (\ref{fi}) in polynomial time.
 
-\begin{theorem}
+\begin{lemma}
 The optimal pairing of (\ref{fi}) is equivalent to the maximum weighted matching in the following undirected graph.
 \begin{equation}\label{graph}
 \mathcal{G}_i=\left\{
@@ -279,7 +277,7 @@ The graph is constructed by a 3-tuple, with the first element being the vertex s
 W_u = T - {\min\ x_u}\ (u\in \mathcal{U}_i),
 \end{equation}
 where $T$ is a positive value such that all weights being positive and min $ x_u$ is obtained from Section \ref{OptimalPowerSplit}.
-\end{theorem}
+\end{lemma}
 \begin{proof}
 Consider odd $|\mathcal{J}_i|$. By the definition in (\ref{graph}), each UE corresponds to a vertex. For any pair $u = \{j,h\}$, there is one edge connecting the UEs $j$ and $h$, representing that $j$ and $h$ are in the NOMA mode. For any pair $u = \{0,j\}$, there is one edge connecting $j$ and the $0$, representing that UE $j$ is in the OMA mode. 
 
@@ -312,15 +310,15 @@ $\rho_i^*\leftarrow\sum_{u\in{\mathcal{U}}_i} x_u^*$\;
 
 \section{An Algorithmic Framework for MaxD}\label{CellLoadsMinimization}
 
-In this section, we present the algorithmic framework for deriving the optimum of {\em MaxD}. The algorithmic framework includes two parts: 1) a fixed-point method to solve multi-cell time-frequency resource consumption minimization with a given $\alpha$; 2) by embedment of the fixed-point method in bi-section search to find the optimal $\alpha^*$.
+In this section, we present the algorithmic framework for deriving the optimum of {\em MaxD}. The algorithmic framework includes two parts: 1) a fixed-point method to solve multi-cell time-frequency resource consumption minimization with a given $\alpha$; 2) by embedment of the fixed-point method in two iterative equations to obtain the optimal $\alpha^*$.
 
-\subsection{Multi-cell Optimization for Given Scaling Factor}\label{MulticellLoadsMinimization}
+\subsection{Multi-cell Resource Minimization for Given Scaling Factor}\label{MulticellLoadsMinimization}
 
 Recall that for the single-cell time-frequency resource consumption minimization problem with a given $\alpha$, the optimum of (\ref{fi}) of cell $i$ is a function of the time-frequency resource consumption of other cells $\boldsymbol{\rho}_{-i}$. We define it formally as follows
 \begin{equation}\label{fi2}
-f_i\left (\boldsymbol{\rho}_{-i}\right ) =  \underset{\rho_i, \boldsymbol{q}_i,\boldsymbol{x}_i,\boldsymbol{y}_i,}{\min} \ \rho_i\  \textup{s.t.\ (\ref{demand1})--(\ref{y2}) of cell $i$} .
+f_{\alpha,i}\left (\boldsymbol{\rho}_{-i}\right ) =  \underset{\rho_i, \boldsymbol{q}_i,\boldsymbol{x}_i,\boldsymbol{y}_i,}{\min} \ \rho_i\  \textup{s.t.\ (\ref{demand1})--(\ref{y2}) of cell $i$} .
 \end{equation}
-It is proved that $f_i\left (\boldsymbol{\rho}_{-i}\right )$ is standard interference function (SIF) in \cite{Yates}. Any SIF $f\left( \boldsymbol{\rho}\right)$ has the following two properties, where $\boldsymbol{\rho}, \boldsymbol{\rho}' \geq \boldsymbol{0}$.
+It is proved that $f_{\alpha,i}\left (\boldsymbol{\rho}_{-i}\right )$ is standard interference function (SIF) in \cite{Yates}. Any SIF $f\left( \boldsymbol{\rho}\right)$ has the following two properties, where $\boldsymbol{\rho}, \boldsymbol{\rho}' \geq \boldsymbol{0}$.
 
 \begin{itemize}
 
@@ -330,35 +328,63 @@ It is proved that $f_i\left (\boldsymbol{\rho}_{-i}\right )$ is standard interfe
 
 \end{itemize}
 
-We denote the optimal solution of (\ref{fi}) for the cells in $ \mathcal{I}$ by $\boldsymbol{\rho}^* $. Based on the proportions of SIF, we can obtain the unique fixed point $\boldsymbol{\rho}^*$ with 
-$\boldsymbol{\rho}^* = \boldsymbol{f}\left(\boldsymbol{\rho}^*\right)$ by fixed-point iterations on $\boldsymbol{f}$, where $\boldsymbol{f}\left(\boldsymbol{\rho}\right) = \left[ f_1\left(\boldsymbol{\rho}_{-1}\right), f_n\left(\boldsymbol{\rho}_{-2}\right), ..., f_n\left(\boldsymbol{\rho}_{-n}\right)\right]$. Namely, for the iterative process $\boldsymbol{\rho}^{(k+1)} =\boldsymbol{f}\left(\boldsymbol{\rho}^{(k)}\right) (k\geq0)$, we have $\lim_{k\rightarrow \infty }\boldsymbol{\rho}^{(k)}=\boldsymbol{\rho}^*$, for arbitrary non-negative staring point $\boldsymbol{\rho}^{(0)}$. In addition, it has been proved that the decoding order indicator obtained by this fixed-point method is optimal to multi-cell optimization problem \cite[Lemma 3]{You2}.
+We denote the optimal solution of (\ref{fi}) for the cells in $ \mathcal{I}$ by $\boldsymbol{\rho}^*_\alpha $. Based on the proportions of SIF, we can obtain the unique fixed point with 
+$\boldsymbol{\rho}^* _\alpha= \boldsymbol{f}_\alpha \left(\boldsymbol{\rho}^*_\alpha\right)$ by fixed-point iterations on $\boldsymbol{f}_\alpha$, where $\boldsymbol{f}_\alpha\left(\boldsymbol{\rho}\right) = \left[ f_{\alpha,1}\left(\boldsymbol{\rho}_{-1}\right), f_{\alpha,2}\left(\boldsymbol{\rho}_{-2}\right), ..., f_{\alpha,n}\left(\boldsymbol{\rho}_{-n}\right)\right]$ solved by Algorithm \ref{al1}. Namely, for the iterative process 
+\begin{equation}\label{iteration}
+\boldsymbol{\rho}^{(k+1)} =\boldsymbol{f}_\alpha\left(\boldsymbol{\rho}^{(k)}\right), k\geq0,
+\end{equation}
+we have $\lim_{k\rightarrow \infty }\boldsymbol{\rho}^{(k)}=\boldsymbol{\rho}^*_\alpha$, for arbitrary non-negative staring point $\boldsymbol{\rho}^{(0)}$ with $\alpha$. In addition, it has been proved that the decoding order indicator obtained by this fixed-point method is optimal to multi-cell optimization problem \cite[Lemma 3]{You2}.
+
 
 \subsection{Finding Optimal Scaling Factor}\label{bisection}
 
- By obtaining every cell's time-frequency resource consumption with a given $\alpha$, the value of $\mathcal{H}(\boldsymbol{\rho})$ can be obtained also. With Lemma 1, we can drive the following corollary to find the optimal $\alpha^*$.
+ With multi-cell resource minimization for given $\alpha$ solved, we can have the following sufficient condition for the optimum of {\em MaxD}.
+  
+ \begin{lemma}\label{property 3}
+If $\boldsymbol{\rho}^*_{\alpha^*}$ is obtained iteratively by (\ref{iteration}) with $\alpha^*$ and $\mathcal{H}(\boldsymbol{\rho}^*_{\alpha^*}) = 1$, then $[\alpha^*, \boldsymbol{\rho}^*_{\alpha^*}]$ is optimal to MaxD.
+\end{lemma}
+\begin{proof}
+Consider a $[{\alpha^*}, \boldsymbol{\rho}^*_{\alpha^*}]$ satisfying conditions in the lemma. Suppose this $[{\alpha^*}, \boldsymbol{\rho}^*_{\alpha^*}]$ is non-optimal to {\em MaxD} then $\alpha' $ $(\alpha' > \alpha^*)$ is optimal to {\em MaxD}. Since $\alpha' > \alpha^*$ with (\ref{cju1}) and (\ref{q1+q2}), we can know all the minimum $x_u'> x_u^*$ $(u\in \mathcal{U})$ constructing undirected graph in Algorithm \ref{al1}. Thus $\boldsymbol{\rho}^*_{\alpha'} > \boldsymbol{\rho}^*_{\alpha^*}$ holds, where $\boldsymbol{\rho}^*_{\alpha'} $ is optimal for $\alpha'$ obtained iteratively by (\ref{iteration}). However, $\mathcal{H}(\boldsymbol{\rho}^*_{\alpha'}) >\mathcal{H}(\boldsymbol{\rho}^*_{\alpha^*}) = 1$ and $\boldsymbol{\rho}^*_{\alpha'}$ is infeasible for {\em MaxD}, which contradicts our assumption that $\alpha'$ is optimal. Hence the conclusion.
+\end{proof}
 
-\begin{corollary}\label{canbisection}
-For any given $\alpha $ and its corresponding minimized multi-cell time-frequency resource consumption $ \boldsymbol{\rho}^*_\alpha$, $\alpha > \alpha^* $ if $\mathcal{H}(\boldsymbol{\rho}^*_\alpha) > 1$ and $\alpha < \alpha^* $ if $\mathcal{H}(\boldsymbol{\rho}^*_\alpha) < 1$. 
-\end{corollary}
+Then the iterative equations in Theorem \ref{canbisection} below give the solution method for solving {\em MaxD}.
 
-Thus, we update the value of $\alpha$ to approach the optimal $\alpha^*$ by bisection search according to Corollary \ref{canbisection}. To be more specific, for the incumbent $\alpha$ the corresponding $\boldsymbol{\rho}^*_\alpha$ is obtained by Algorithm \ref{al1} and fixed-point iterations on $\boldsymbol{f}$. Then we calculate the corresponding $\mathcal{H}(\boldsymbol{\rho}^*_\alpha)$. According to Corollary \ref{canbisection}, we know the optimal alpha is greater than $\alpha$ if  $\mathcal{H}(\boldsymbol{\rho}^*_\alpha)<1$, otherwise, the optimal alpha is smaller than $\alpha$. That is, we search the optimal $\alpha ^*$ in a given range $[\alpha _\text{LB},\alpha _\text{UB} ]$ by bisection search, leading to the maximum scaling factor $\alpha^*$ for $\mathcal{S}$. This algorithmic framework is detailed in Algorithm \ref{al2}. 
+
+\begin{theorem}\label{canbisection}
+Denote $\alpha^*=\lim_{k\rightarrow \infty }\alpha^{(k)}$ is optimal to  MaxD, where 
+\begin{equation}\label{alpha}
+\alpha ^{\left(k+1\right)} = \frac{\alpha ^{(k)}} { \mathcal{H}\left(\boldsymbol{\rho}^{(k+1)}\right)},k\geq0.
+\end{equation}
+with
+\begin{equation}\label{obtainf}
+\boldsymbol{\rho}^{\left(k+1\right)} =\boldsymbol{f}_{\alpha^{(k)}}\left(\boldsymbol{\rho}^{(k)}\right),k\geq0,
+\end{equation}
+\end{theorem}
+\begin{proof}
+With the proof of Lemma \ref{property 1}, we can know if $\alpha >\alpha^*$, $\mathcal{H}(\boldsymbol{\rho}^*_{\alpha}) > 1$, otherwise, $\mathcal{H}(\boldsymbol{\rho}^*_{\alpha}) < 1$. In (\ref{alpha}), the value of $\alpha^{(k+1)} $ can be adjusted according to the $\boldsymbol{\rho}^{(k+1)}$ obtained from (\ref{obtainf}). If $\boldsymbol{\rho}^{(k+1)} > \boldsymbol{\rho}^*$ ($\boldsymbol{\rho}^*$ is optimal to {\em MaxD}) such that $\mathcal{H}\left(\boldsymbol{\rho}^{(k+1)}\right) > 1$, the $\alpha^{(k+1)}$ would be smaller and closer to $\alpha^*$ according to (\ref{alpha}), otherwise, the $\alpha$ would be greater and closer to $\alpha^*$ also. So, when $k\rightarrow \infty $, $\mathcal{H}\left(\boldsymbol{\rho}^{(k+1)}\right) = 1$, and according to Lemma \ref{property 3}, the $\boldsymbol{\rho}^{(k+1)}$ obtained from (\ref{obtainf}) is optimal to {\em MaxD}. 
+\end{proof}
+The algorithm solving {\em MaxD} is shown in Algorithm \ref{al2}.
+
 
 \begin{algorithm}[tbp]\label{al2}
 \caption{Scaling Factor Maximization} 
 \KwIn{$\mathcal{S}$, $\boldsymbol{d}$, $\bar{{\rho}}$, $\mathcal{U}$, $\epsilon>0 $} 
 \KwOut{$\alpha^*,\boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{B}^*,\boldsymbol{y}^* $;}   
-$\alpha_{LB}\leftarrow 1$, $\alpha_{UB}\leftarrow 20$\;
+$\alpha^{(0)}\leftarrow 1$ (Or other positive number)\;
+$\boldsymbol{\rho}^{(0)}\leftarrow \boldsymbol{0}$ (Or other non-negative number)\;
+$k\leftarrow0$\;
 \Repeat 
-{$(\alpha _{UB}- \alpha_{LB})<\epsilon$}
-{$\alpha \leftarrow (\alpha_{LB}+\alpha_{UB})/{2}$, $k\leftarrow0$, $\boldsymbol{\rho}^{(0)}\leftarrow \boldsymbol{0}$\;
-\Repeat{$\left \| \boldsymbol{\rho}^{(k)} - \boldsymbol{\rho}^{(k-1)} \right \|<\epsilon$}{$k\leftarrow k+1$, obtain $ \boldsymbol{\rho}^{(k)}$ from Algorithm \ref{al1}\label{s-cell}\;}
- \eIf{$\mathcal{H}(\boldsymbol{\rho}^{(k)}) >1$}{
-  $\alpha _{UB} \leftarrow \alpha$\;
-  }{
-$\alpha _{LB} \leftarrow \alpha$\;
-  }
+{
+%$|\mathcal{H}\left(\boldsymbol{\rho}^{(k)}\right) - 1| < \epsilon$
+$\left \|[\alpha^{(k)}, \boldsymbol{\rho}^{(k)}]-[\alpha^{(k-1)},\boldsymbol{\rho}^{(k-1)}] \right \|<\epsilon$
+}
+{
+$ \boldsymbol{\rho}^{\left(k+1\right)} \leftarrow\boldsymbol{f}_{\alpha^{(k)}}\left(\boldsymbol{\rho}^{(k)}\right)$ by Algorithm \ref{al1}\label{s-cell}\;
+$\alpha ^{\left(k+1\right)} \leftarrow \alpha ^{(k)} / \mathcal{H}\left(\boldsymbol{\rho}^{(k+1)}\right)$\;
+$k\leftarrow k+1$\;
 }  
-$\alpha^*\leftarrow \alpha$, retrieve $[\boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{B}^*,\boldsymbol{y}^*]$ in Step \ref{s-cell} for $\alpha^*$\;
+$\alpha^*\leftarrow \alpha^{(k)}$\;
+Retrieve $[\boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{B}^*,\boldsymbol{y}^*]$ in Step \ref{s-cell} for $\alpha^*$\;
 \Return {$[\alpha^*, \boldsymbol{q}^*,\boldsymbol{x}^*,\boldsymbol{\rho}^*, \boldsymbol{B}^*,\boldsymbol{y}^*]$}\;
 \end{algorithm} 
 
@@ -367,7 +393,7 @@ $\alpha^*\leftarrow \alpha$, retrieve $[\boldsymbol{q}^*,\boldsymbol{x}^*,\bolds
 %---------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Performance Evaluation and Discussion}\label{Sec:PerformanceEvaluationDiscussions}
 
-In the topology used, there are 21 cells including 7 macro cells and 14 small cells. UE reference demands are set to $\{1.0, 1.2, 1.4, 1.6, 1.8\}$ Mbps. Besides, we select $P\%\ (P=5, 10, 15, 20, 25)$ UEs with ascending gain in every cell into the set $\mathcal{S}$. Other parameters are given in Table \ref{tab:test}. The numerical results are illustrated in Figure \ref{1}-\ref{4}. We remark that both OMA and NOMA are solved to optimality.
+In the network topology used, there are 21 cells including 7 macro cells and 14 small cells. UE reference demands are set to $\{1.0, 1.2, 1.4, 1.6, 1.8\}$ Mbps. To address edge users, we select $P\%\ (P=5, 10, 15, 20, 25)$ UEs with ascending gain in every cell into the set $\mathcal{S}$. Other parameters are given in Table \ref{tab:test}. The numerical results are illustrated in Figure \ref{1}-\ref{4}. We remark that both OMA and NOMA are solved to optimality.
 
 
 \begin{table}[htbp]
@@ -395,11 +421,11 @@ In the topology used, there are 21 cells including 7 macro cells and 14 small ce
 \end{table}
 
 
-Figure \ref{1} shows how scaling factor $\alpha$ decreases while the UE reference demand increases for six scenarios. This can be easily explained that there is less time-frequency resource available for demand scaling when the reference demand is high. NOMA can offer more to edge UEs compared to OMA. Compared to OMA, NOMA has 16.75\%, 22.36\% and 31.20\% higher performance when $P=5$ with $d=1.0, 1.2, 1.4$ Mbps, respectively. It shows that NOMA performs better in high-demand and resource-limited scenarios. Figure \ref{2} shows the scaling factor $\alpha $ with different percentages of scaled UEs with $d = 1.4$ Mbps. As we can see, the scaling factor $\alpha$ increases dramatically while the percentage of scaled UEs decreases. 
+Figure \ref{1} shows how scaling factor $\alpha$ decreases while the UE reference demand increases for the six scenarios of $P$. This can be easily explained as there is less time-frequency resource available for demand scaling when the reference demand is high. NOMA can offer more to edge UEs compared to OMA. Compared to OMA, NOMA has 31.20\% higher performance when $P=5$ with $d=1.4$ Mbps, respectively. It shows that NOMA performs better in high-demand and hence resource-limited scenarios. Figure \ref{2} shows the scaling factor $\alpha $ with different percentages of scaled UEs with $d = 1.4$ Mbps. As we can see, the scaling factor $\alpha$ increases dramatically while the percentage of scaled UEs decreases. 
 
-In addition to scaling factor $\alpha$, we examine the increase total throughput in Figure \ref{3} and \ref{4}. In Figure \ref{3}, it is shown that NOMA always can help edge UEs to deliver more data, especially the case where UE reference demand is quite high. 
+In addition to scaling factor $\alpha$, we examine the increase of total throughput in Figures \ref{3} and \ref{4}. In Figure \ref{3}, it is shown that NOMA always outperforms OMA in edge performance under different $P$, especially the case where the UE reference demand is quite high. Also, Figure \ref{3} and \ref{4} show the increasing rate of edge performance decreases when the $P$ increases, because there are more scaling UEs to be allocated resource.
 
-There is an interesting finding in our simulations, namely the optimal pairing is invariant in the bisection search for $\alpha$, regardless of the $\alpha$ value in question. That is, Step \ref{MWM} in Algorithm \ref{al1} probably needs to implement only once. We tend to believe that it is can be proved. If this is generally true (which requires a formal proof), the complexity of the algorithm can be reduced without loss of optimality.
+There is an interesting finding in our simulations, namely the optimal pairing is invariant in (\ref{alpha}) and (\ref{obtainf}) for $\alpha$, regardless of the $\alpha$ value in question. That is, Step \ref{MWM} in Algorithm \ref{al1} probably needs to be run only once. If this is generally true (which requires a formal proof), the complexity of the Algorithm \ref{al2} can be reduced without loss of optimality.
 
 
 %---------------------------------------------------------------------------------------------------------------------------------------------
@@ -416,28 +442,28 @@ In this paper, we have studied a joint optimization problem of time-frequency re
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{1.eps}
-\caption{This figure shows the scaling factor $\alpha$ in the function of UE reference demand at NOMA and OMA with different percentage of scaled UEs}
+\caption{This figure shows the scaling factor $\alpha$ as function of UE reference demand with different percentage of scaled UEs}
 \label{1}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{2.eps}
-\caption{This figure shows the scaling factor $\alpha$ in the function of the percentage of scaled UEs at NOMA and OMA with $d=1.4$ Mbps.}
+\caption{This figure shows the scaling factor $\alpha$ as function of the percentage of scaled UEs with $d=1.4$ Mbps.}
 \label{2}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{3.eps}
-\caption{This figure shows the increase in total throughput in the function of UE reference demand at NOMA and OMA with $P = 15$.}
+\caption{This figure shows the increase in total throughput as function of UE reference demand with $P = 15$.}
 \label{3}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{4.eps}
-\caption{This figure shows the increase in total throughput in the function of UE reference demand at NOMA and OMA with $d = 1.4$ Mbps.}
+\caption{This figure shows the increase in total throughput as function of UE reference demand with $d = 1.4$ Mbps.}
 \label{4}
 \end{figure}
 
